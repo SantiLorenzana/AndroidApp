@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#232323"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingBottom="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp"
+    tools:context="com.app1t1617.iotgroup.swithome.Login.ResetPassActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="Introduzca nueva contraseña"
+        android:textAlignment="center"
+        android:textColor="@color/textos" />
+
+    <EditText
+        android:id="@+id/userinput"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nueva contraseña"
+        android:inputType="textPassword"
+        android:textAlignment="center"
+        android:textColor="@color/textos"
+        android:textColorHint="@color/botones" />
+    <EditText
+        android:id="@+id/userinput2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="Repite la nueva contraseña"
+        android:inputType="textPassword"
+        android:textAlignment="center"
+        android:textColor="@color/textos"
+        android:textColorHint="@color/botones" />
+
+    <Button
+        android:id="@+id/buttonCambiarPass"
+        android:layout_width="200dp"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/roundedbutton"
+        android:text="Cambiar"
+        android:textColor="@color/textos"
+        android:onClick="finalUpdate"/>
+
+</LinearLayout>

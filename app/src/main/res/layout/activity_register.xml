@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/premiun_dark"
+    tools:context="com.app1t1617.iotgroup.swithome.Login.RegisterActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp"
+        android:paddingTop="50dp">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="120dp"
+            android:fontFamily="@font/michroma"
+            android:lineSpacingExtra="8sp"
+            android:text="Registro"
+            android:textAlignment="center"
+            android:textColor="@color/botones"
+            android:textSize="30sp"
+            android:typeface="sans"
+            android:visibility="visible"
+            tools:layout_editor_absoluteX="119dp"
+            tools:layout_editor_absoluteY="57dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginTop="13dp"
+                app:srcCompat="@drawable/user_icon"
+                tools:layout_editor_absoluteX="75dp"
+                tools:layout_editor_absoluteY="351dp" />
+
+            <EditText
+                android:id="@+id/userRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/placeHoldersUP"
+                android:ems="10"
+                android:fontFamily="@font/roboto"
+                android:hint="Usuario"
+                android:inputType="textPersonName"
+                android:paddingLeft="10dp"
+                android:textColor="@color/textos"
+                android:textColorHint="@color/botones"
+                tools:layout_editor_absoluteX="114dp"
+                tools:layout_editor_absoluteY="341dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginTop="13dp"
+                app:srcCompat="@drawable/mail_icon"
+                tools:layout_editor_absoluteX="75dp"
+                tools:layout_editor_absoluteY="351dp" />
+
+            <EditText
+                android:id="@+id/emailRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/placeHoldersUP"
+                android:ems="10"
+                android:fontFamily="@font/roboto"
+                android:hint="Email"
+                android:inputType="textPersonName"
+                android:paddingLeft="10dp"
+                android:textColor="@color/textos"
+                android:textColorHint="@color/botones"
+                tools:layout_editor_absoluteX="114dp"
+                tools:layout_editor_absoluteY="341dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginTop="13dp"
+                app:srcCompat="@drawable/pass_icon"
+                tools:layout_editor_absoluteX="75dp"
+                tools:layout_editor_absoluteY="351dp" />
+
+            <EditText
+                android:id="@+id/passRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/placeHoldersUP"
+                android:ems="10"
+                android:fontFamily="@font/roboto"
+                android:hint="Contraseña"
+                android:inputType="textPassword"
+                android:paddingLeft="10dp"
+                android:textColor="@color/textos"
+                android:textColorHint="@color/botones"
+                tools:layout_editor_absoluteX="114dp"
+                tools:layout_editor_absoluteY="341dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginTop="13dp"
+                app:srcCompat="@drawable/pass_icon"
+                tools:layout_editor_absoluteX="75dp"
+                tools:layout_editor_absoluteY="351dp" />
+
+            <EditText
+                android:id="@+id/passRegisterDC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/placeHoldersUP"
+                android:ems="10"
+                android:fontFamily="@font/roboto"
+                android:hint="Repetir contrasaña"
+                android:inputType="textPassword"
+                android:paddingLeft="10dp"
+                android:textColor="@color/textos"
+                android:textColorHint="@color/botones"
+                tools:layout_editor_absoluteX="114dp"
+                tools:layout_editor_absoluteY="341dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonRegist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/roundedbutton"
+                android:elevation="0dp"
+                android:fontFamily="@font/roboto"
+                android:text="Registro"
+                android:textColor="@color/textos"
+                tools:layout_editor_absoluteX="161dp"
+                tools:layout_editor_absoluteY="509dp"
+                android:onClick="checkData"/>
+
+            <ProgressBar
+                android:id="@+id/progressBarRegister"
+                style="@style/Base.Widget.AppCompat.ProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/returnToLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="Volver al Log In"
+                android:textColor="#999999"
+                android:textSize="15sp"
+                tools:layout_editor_absoluteX="121dp"
+                tools:layout_editor_absoluteY="576dp"
+                android:onClick="returnToIndex"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

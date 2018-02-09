@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">SwitcHome</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_menu_lateral">menu_lateral</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="abrir_menu">Botón para abrir el menú lateral</string>
+    <string name="cerrar_menu">Botón para cerrar el menú lateral</string>
+
+    <string-array name="pantallas">
+        <item>Inicio</item>
+        <item>Mis dispositivos</item>
+        <item>Mis configuraciones</item>
+        <item>Funciones rápidas</item>
+        <item>Perfil</item>
+        <item>Cerrar sesión</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
