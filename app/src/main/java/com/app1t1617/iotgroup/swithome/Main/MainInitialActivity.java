@@ -126,11 +126,12 @@ public class MainInitialActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.main_frame_layout, new MainMenuFragment(), "Fragment");
         //fragmentTransaction.commit();
     }
-
+    //Vuelta al login y se eliminan todas las credenciales y los datos del usuario
     public void backToLogin(){
         Intent intent = new Intent(this, MainActivity.class);
         editor.remove("token");
         editor.remove("nameLogged");
+        editor.remove("firstLog");
         editor.commit();
         startActivity(intent);
         finish();

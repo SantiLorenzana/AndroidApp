@@ -37,6 +37,7 @@ public class FastActionsFragment extends Fragment {
 
     ImageButton nightMode;
     ImageButton follow;
+    ImageButton turnOff;
 
     Button reset;
 
@@ -65,6 +66,8 @@ public class FastActionsFragment extends Fragment {
         nightMode = (ImageButton) view.findViewById(R.id.night_mode_button);
         follow = (ImageButton) view.findViewById(R.id.follow_button);
         reset = (Button) view.findViewById(R.id.reset_switchome);
+        turnOff = (ImageButton) view.findViewById(R.id.switch_off_button);
+
 
         //Obtener de preferencias el dato guardado
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -84,6 +87,24 @@ public class FastActionsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 changeFollowMode();
+            }
+        });
+
+        turnOff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(context);
+                dialog.getWindow().setContentView(R.layout.alert_turn_off);
+
+                Button cancel = (Button) dialog.findViewById(R.id.cancel_off);
+                Button acept = (Button) dialog.findViewById(R.id.accept_off);
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
             }
         });
 

@@ -17,12 +17,12 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="150dp"
+                android:layout_height="170dp"
                 android:gravity="top|center"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/bienvenido"
+                    android:id="@+id/main_welcome_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/michroma"
@@ -30,11 +30,19 @@
                     android:textColor="@color/botones"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/userNameTitle"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    android:visibility="visible"/>
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_marginTop="7dp"
+                    android:layout_height="100dp"
+                    android:layout_width="100dp"
+                    android:id="@+id/main_profile_image"
+                    android:src="@drawable/defaultprofile"
+                    app:civ_border_width="4dp"
+                    android:visibility="visible"
+                    app:civ_border_color="@color/green"/>
 
                 <TextView
+                    android:layout_marginTop="5dp"
                     android:id="@+id/userNameTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -43,10 +51,7 @@
                     android:textColor="@color/botones"
                     android:textSize="18sp"
                     android:textStyle="bold" />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"/>
+
             </LinearLayout>
 
             <LinearLayout

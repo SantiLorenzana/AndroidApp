@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app1t1617.iotgroup.swithome.FastActions.FastActionsFragment;
+import com.app1t1617.iotgroup.swithome.Profile.MyProfileFragment;
 import com.app1t1617.iotgroup.swithome.R;
 import com.app1t1617.iotgroup.swithome.data.model.Get;
 import com.app1t1617.iotgroup.swithome.data.remote.APIService;
@@ -37,6 +38,8 @@ public class MainMenuFragment extends Fragment {
     ImageButton myConfig;
     ImageButton fastActions;
     ImageButton myProfile;
+    de.hdodenhof.circleimageview.CircleImageView profileImage;
+    TextView welcome;
 
     FragmentTransaction fragmentTransaction;
 
@@ -69,6 +72,8 @@ public class MainMenuFragment extends Fragment {
         myConfig = (ImageButton) view.findViewById(R.id.MyConfig);
         fastActions = (ImageButton) view.findViewById(R.id.FastActions);
         myProfile = (ImageButton) view.findViewById(R.id.MyProfile);
+        welcome = (TextView) view.findViewById(R.id.main_welcome_text);
+        profileImage = (de.hdodenhof.circleimageview.CircleImageView) view.findViewById(R.id.main_profile_image);
 
         getActivity().setTitle("Inicio");
 
@@ -78,6 +83,8 @@ public class MainMenuFragment extends Fragment {
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
         editor = prefs.edit();
         String name = prefs.getString("nameLogged", "No name defined");
+
+        checkFirstLog();
 
         //Usar ese dato en el sistema
         userNameTitle.setText(name);
@@ -115,7 +122,9 @@ public class MainMenuFragment extends Fragment {
         myProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                motherOfToast("Vista en construcción");
+                fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
+                fragmentTransaction.replace(R.id.main_frame_layout, new MyProfileFragment()).addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
 
@@ -132,9 +141,25 @@ public class MainMenuFragment extends Fragment {
         return view;
     }
 
+
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
+
+    public void checkFirstLog(){
+        Boolean firstLog = prefs.getBoolean("firstLog", true);
+
+        if (firstLog){
+            profileImage.setVisibility(View.GONE);
+            welcome.setVisibility(View.VISIBLE);
+            editor.putBoolean("firstLog", false);
+            editor.commit();
+        }else{
+            profileImage.setVisibility(View.VISIBLE);
+            welcome.setVisibility(View.GONE);
+        }
     }
 
     //toast function

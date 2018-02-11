@@ -9,4 +9,6 @@
     <color name="btn_danger">#DA041E</color>
     <color name="greyToolbar">#464646</color>
     <color name="transparent">#00000000</color>
+    <color name="green">#7ED427</color>
+    <color name="yellow">#FEC418</color>
 </resources>
