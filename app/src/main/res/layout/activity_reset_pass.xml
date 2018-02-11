@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,12 +14,12 @@
         android:orientation="vertical"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp"
-        android:paddingTop="50dp">
+        android:paddingTop="30dp">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
-            android:layout_height="80dp"
+            android:layout_height="90dp"
             android:fontFamily="@font/michroma"
             android:lineSpacingExtra="8sp"
             android:text="Recuperar contraseña"
@@ -147,4 +147,4 @@
 
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

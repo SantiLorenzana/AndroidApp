@@ -43,6 +43,10 @@
                     android:textColor="@color/botones"
                     android:textSize="18sp"
                     android:textStyle="bold" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
             </LinearLayout>
 
             <LinearLayout
@@ -56,13 +60,19 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/MyDevices"
+                    <LinearLayout
                         android:layout_width="150dp"
                         android:layout_height="100dp"
-                        app:srcCompat="@drawable/dispositivos_logo"
-                        tools:layout_editor_absoluteX="16dp"
-                        tools:layout_editor_absoluteY="124dp" />
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/MyDevices"
+                            android:layout_height="100dp"
+                            android:layout_width="100dp"
+                            android:src="@drawable/dispositivos_logo"
+                            android:background="@drawable/transparent_background_button"
+                            android:scaleType="fitCenter" />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/textView4"
@@ -80,11 +90,19 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/MyConfig"
+                    <LinearLayout
                         android:layout_width="150dp"
                         android:layout_height="100dp"
-                        app:srcCompat="@drawable/misconfig_logo" />
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/MyConfig"
+                            android:layout_height="100dp"
+                            android:layout_width="100dp"
+                            android:src="@drawable/misconfig_logo"
+                            android:background="@drawable/transparent_background_button"
+                            android:scaleType="fitCenter" />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/textView5"
@@ -109,11 +127,19 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/FastActions"
-                        android:layout_width="161dp"
+                    <LinearLayout
+                        android:layout_width="150dp"
                         android:layout_height="100dp"
-                        app:srcCompat="@drawable/logo_app_resized" />
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/FastActions"
+                            android:layout_height="100dp"
+                            android:layout_width="100dp"
+                            android:src="@drawable/logo_app_resized"
+                            android:background="@drawable/transparent_background_button"
+                            android:scaleType="fitCenter" />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/textView7"
@@ -131,11 +157,19 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/MyProfile"
-                        android:layout_width="161dp"
+                    <LinearLayout
+                        android:layout_width="150dp"
                         android:layout_height="100dp"
-                        app:srcCompat="@drawable/mi_perfil_logo" />
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/MyProfile"
+                            android:layout_height="100dp"
+                            android:layout_width="100dp"
+                            android:src="@drawable/mi_perfil_logo"
+                            android:background="@drawable/transparent_background_button"
+                            android:scaleType="fitCenter" />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/textView6"

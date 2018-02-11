@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     //Funcion cambiar a la vista de registro
     public void changeToRegister(View view){
         Intent intent = new Intent(this, RegisterActivity.class);
@@ -120,13 +121,14 @@ public class MainActivity extends AppCompatActivity {
             //En caso de que la conexion con el servidor sea correcta
             @Override
             public void onResponse(Call<Get> call, Response<Get> response) {
-                if (response.body().getData() == null){
-                    motherOfToast(response.body().getMessage());
-                }else{
+                if (response.body().getCode() == 200){
                     editor.putString("token", response.body().getData().getToken());
                     editor.putString("nameLogged", response.body().getData().getName());
+                    Log.d("LOGIN", response.body().getData()+"");
                     editor.commit();
                     changeToLogin();
+                }else{
+                    motherOfToast(response.body().getMessage());
                 }
                 enableButtons();
             }
@@ -167,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onResponse(Call<Get> call, Response<Get> response) {
                     Integer code = response.body().getCode();
                     if (code == 200){
+
                         changeToLogin();
                     }
                 }

@@ -11,10 +11,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app1t1617.iotgroup.swithome.FastActions.FastActionsFragment;
 import com.app1t1617.iotgroup.swithome.Login.MainActivity;
@@ -31,15 +35,23 @@ public class MainInitialActivity extends AppCompatActivity {
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
 
-
+    View layout;
+    Toast toast;
+    TextView textToast;
+    Toolbar mainToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_initial);
-        Toolbar mainToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.main_toolbar);
+        mainToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.main_toolbar);
 
         setSupportActionBar(mainToolbar);
+
+        //Toast
+        layout = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastlinear));
+        textToast = (TextView) layout.findViewById(R.id.toastapp);
+        toast = new Toast(this);
 
         //Menú lateral configuración
         fragmentManager = getSupportFragmentManager();
@@ -72,30 +84,47 @@ public class MainInitialActivity extends AppCompatActivity {
     }
     private void abrirPantalla(int i){
 
+        fragmentTransaction = fragmentManager.beginTransaction();
 
         switch (i) {
             case 0:  // Abrir fragment Inicio
-                setTitle("Inicio");
+                clearBackStack();
                 fragment = new MainMenuFragment();
-
                 break;
-            case 1:  // Abrir fragment Registro
-                setTitle("Registro");
-                //fragment = new RegistroFragment();
+            case 1:
+                motherOfToast("Vista en construcción");
+                break;
+            case 2:
+                motherOfToast("Vista en construcción");
                 break;
             case 3:
-                setTitle("Funciones rápidas");
-                fragment = new FastActionsFragment();
+                if (mainToolbar.getTitle() != "Funciones rápidas") {
+                    clearBackStack();
+                    fragment = new FastActionsFragment();
+                    fragmentTransaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.enter_from_right, R.anim.exit_to_left);
+                    fragmentTransaction.addToBackStack(null);
+                }
+                break;
+            case 4:
+                motherOfToast("Vista en construcción");
                 break;
             case 5:
                 backToLogin();
                 break;
         }
 
-        fragmentTransaction = fragmentManager.beginTransaction();
+
+
         fragmentTransaction.replace(R.id.main_frame_layout, fragment, "Fragment");
         fragmentTransaction.commit();
 
+    }
+
+    public void clearBackStack(){
+        fragmentManager.popBackStack();
+        //fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.main_frame_layout, new MainMenuFragment(), "Fragment");
+        //fragmentTransaction.commit();
     }
 
     public void backToLogin(){
@@ -112,5 +141,13 @@ public class MainInitialActivity extends AppCompatActivity {
         drawerToggle.syncState();
     }
 
+    //toast function
+    public void motherOfToast(String message){
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.TOP,0,50);
+        textToast.setText(message);
+        toast.setView(layout);
+        toast.show();
+    }
 
 }

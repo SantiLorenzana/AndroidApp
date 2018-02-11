@@ -7,11 +7,14 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app1t1617.iotgroup.swithome.FastActions.FastActionsFragment;
 import com.app1t1617.iotgroup.swithome.R;
@@ -30,10 +33,10 @@ public class MainMenuFragment extends Fragment {
     public Context context;
 
     TextView userNameTitle;
-    ImageView myDevices;
-    ImageView myConfig;
-    ImageView fastActions;
-    ImageView myProfile;
+    ImageButton myDevices;
+    ImageButton myConfig;
+    ImageButton fastActions;
+    ImageButton myProfile;
 
     FragmentTransaction fragmentTransaction;
 
@@ -42,6 +45,10 @@ public class MainMenuFragment extends Fragment {
     SharedPreferences.Editor editor;
 
     private RaspberryAPIService mRaspberryAPIService;
+
+    View layout;
+    Toast toast;
+    TextView textToast;
 
     @Override
     public void onAttach(Context context) {
@@ -58,10 +65,12 @@ public class MainMenuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_main_menu, container, false);
         userNameTitle = (TextView) view.findViewById(R.id.userNameTitle);
-        myDevices = (ImageView) view.findViewById(R.id.MyDevices);
-        myConfig = (ImageView) view.findViewById(R.id.MyConfig);
-        fastActions = (ImageView) view.findViewById(R.id.FastActions);
-        myProfile = (ImageView) view.findViewById(R.id.MyProfile);
+        myDevices = (ImageButton) view.findViewById(R.id.MyDevices);
+        myConfig = (ImageButton) view.findViewById(R.id.MyConfig);
+        fastActions = (ImageButton) view.findViewById(R.id.FastActions);
+        myProfile = (ImageButton) view.findViewById(R.id.MyProfile);
+
+        getActivity().setTitle("Inicio");
 
         mRaspberryAPIService = ApiUtils.getRaspberryAPIService();
 
@@ -75,7 +84,10 @@ public class MainMenuFragment extends Fragment {
 
         fragmentTransaction = getFragmentManager().beginTransaction();
 
-
+        //Toast
+        layout = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) view.findViewById(R.id.toastlinear));
+        textToast = (TextView) layout.findViewById(R.id.toastapp);
+        toast = new Toast(context);
 
         myDevices.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,15 +95,27 @@ public class MainMenuFragment extends Fragment {
                 mRaspberryAPIService.switchLight().enqueue(new Callback<Get>() {
                     @Override
                     public void onResponse(Call<Get> call, Response<Get> response) {
-
                         Log.d("RASPBERRY", response.headers()+"");
                     }
-
                     @Override
                     public void onFailure(Call<Get> call, Throwable t) {
                         Log.d("RASPBERRY", t+"");
                     }
                 });
+            }
+        });
+
+        myConfig.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                motherOfToast("Vista en construcción");
+            }
+        });
+
+        myProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                motherOfToast("Vista en construcción");
             }
         });
 
@@ -111,5 +135,14 @@ public class MainMenuFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
+
+    //toast function
+    public void motherOfToast(String message){
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.TOP,0,50);
+        textToast.setText(message);
+        toast.setView(layout);
+        toast.show();
     }
 }

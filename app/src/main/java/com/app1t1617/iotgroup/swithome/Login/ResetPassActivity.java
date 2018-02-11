@@ -44,10 +44,12 @@ public class ResetPassActivity extends AppCompatActivity {
     View layout;
     Toast toast;
     TextView textToast;
-    TextView textToastCosa;
     //TextInputs
     String firstPass;
     String checkPass;
+
+    Dialog dialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +64,8 @@ public class ResetPassActivity extends AppCompatActivity {
         mAPIService = ApiUtils.getAPIService();
         //Toast
         layout = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastlinear));
-        textToastCosa = (TextView)layout.findViewById(R.id.toastapp);
+        textToast = (TextView)layout.findViewById(R.id.toastapp);
         toast = new Toast(this);
-        textToast = (TextView) findViewById(R.id.toastapp);
     }
 
     //Funcuon para finalizar la actividad y volver al login
@@ -87,24 +88,34 @@ public class ResetPassActivity extends AppCompatActivity {
     }
 
     //Funcion para guardar los datos e iniciar la funcion dentro de la api
-    private void resetToServer(final String name, final String pass) {
-        mAPIService.recoverUser(name, pass).enqueue(new Callback<Get>() {
+    private void resetToServer(final String name, final String email) {
+        mAPIService.recoverUser(name, email).enqueue(new Callback<Get>() {
             //En caso de que la conexion con el servidor sea correcta (Funcion recoger token y guardarlo)
             @Override
             public void onResponse(Call<Get> call, final Response<Get> response) {
-                if (response.body().getData() == null) {
-                    motherOfToast(response.body().getMessage());
-                    enableButtons();
-                } else {
+                if (response.body().getCode() == 200){
                     View view = (LayoutInflater.from(ResetPassActivity.this)).inflate(R.layout.user_input, null);
-                    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ResetPassActivity.this);
+                    AlertDialog.Builder alertBuilder  = new AlertDialog.Builder(ResetPassActivity.this);
                     alertBuilder.setView(view);
                     userInputPass = (EditText) view.findViewById(R.id.userinput);
                     userInputPass2 = (EditText) view.findViewById(R.id.userinput2);
+                    Button changePass = (Button) view.findViewById(R.id.buttonCambiarPass);
+
                     changeToken(response.body().getData().getToken(), String.valueOf(userInputPass.getText()));
-                    Dialog dialog = alertBuilder.create();
+                    dialog = alertBuilder.create();
+                    changePass.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            finalUpdate();
+
+                        }
+                    });
                     dialog.show();
+                }else{
+                    motherOfToast(response.body().getMessage());
+                    enableButtons();
                 }
+                enableButtons();
             }
             //En caso de que la conexión con el servidor haya fallado
             @Override
@@ -123,7 +134,7 @@ public class ResetPassActivity extends AppCompatActivity {
 
 
     //Funcion actualizar campos dentro de la API
-    public void finalUpdate (View view) {
+    public void finalUpdate () {
         checkInputs();
         if (validation == true) {
             mAPIService.updatePass(userInputPass.getText().toString(), tokenTemp).enqueue(new Callback<Post>() {
@@ -132,8 +143,9 @@ public class ResetPassActivity extends AppCompatActivity {
                 public void onResponse(Call<Post> call, Response<Post> response) {
                     if (response.isSuccessful()) {
                         motherOfToast(response.body().toString());
-                        if (response.body().toString().equals("contraseña actualizada")) {
-                            finish();
+                        if (response.body().getCode() == 201) {
+                            dialog.dismiss();
+                            thread.start();
                         }
                     } else {
                         motherOfToast("Fallo de conexión con el servidor");
@@ -173,7 +185,7 @@ public class ResetPassActivity extends AppCompatActivity {
     public void motherOfToast(String message){
         toast.setDuration(Toast.LENGTH_LONG);
         toast.setGravity(Gravity.TOP,0,50);
-        textToastCosa.setText(message);
+        textToast.setText(message);
         toast.setView(layout);
         toast.show();
     }
@@ -185,4 +197,16 @@ public class ResetPassActivity extends AppCompatActivity {
         chargeBar.setVisibility(View.GONE);
         recoverbutton.setVisibility(View.VISIBLE);
     }
+
+    Thread thread = new Thread(){
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(2500); // As I am using LENGTH_LONG in Toast
+                ResetPassActivity.this.finish();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    };
 }

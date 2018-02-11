@@ -45,7 +45,6 @@
         android:layout_height="wrap_content"
         android:background="@drawable/roundedbutton"
         android:text="Cambiar"
-        android:textColor="@color/textos"
-        android:onClick="finalUpdate"/>
+        android:textColor="@color/textos" />
 
 </LinearLayout>

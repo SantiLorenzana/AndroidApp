@@ -32,7 +32,7 @@ public class LateralMenuAdapter extends ArrayAdapter {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.lateral_menu_adapter, parent, false);
+        final View view = inflater.inflate(R.layout.lateral_menu_adapter, parent, false);
 
         String listItem = itemList[position];
 
@@ -42,6 +42,8 @@ public class LateralMenuAdapter extends ArrayAdapter {
         if (position == itemList.length-1){
             item.setTextColor(Color.parseColor("#DA041E"));
         }
+
+
         item.setText(listItem);
 
         return view;

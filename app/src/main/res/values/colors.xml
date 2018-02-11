@@ -8,4 +8,5 @@
     <color name="textos">#f5f5f5</color>
     <color name="btn_danger">#DA041E</color>
     <color name="greyToolbar">#464646</color>
+    <color name="transparent">#00000000</color>
 </resources>

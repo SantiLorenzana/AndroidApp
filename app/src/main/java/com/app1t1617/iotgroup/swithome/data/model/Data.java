@@ -29,4 +29,15 @@ public class Data {
     public void setToken(String token) {
         this.token = token;
     }
+
+    @SerializedName("user")
+    @Expose
+    private User user;
+
+    public User getUser(){
+        return user;
+    }
+    public void setUser(User user){
+        this.user = user;
+    }
 }

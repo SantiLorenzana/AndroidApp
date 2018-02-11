@@ -106,7 +106,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if(response.isSuccessful()) {
                     motherOfToast(response.body().toString());
                     //Si la respuesta es que se ha creado un usuario, se finaliza la actividad y se vuelve al login
-                    if (response.body().toString().equals("usuario creado")) {
+                    if (response.body().getCode() == 201) {
                         thread.start();
                     }
                     enableButtons();
@@ -133,7 +133,7 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         public void run() {
             try {
-                Thread.sleep(3500); // As I am using LENGTH_LONG in Toast
+                Thread.sleep(3000); // As I am using LENGTH_LONG in Toast
                 RegisterActivity.this.finish();
             } catch (Exception e) {
                 e.printStackTrace();
