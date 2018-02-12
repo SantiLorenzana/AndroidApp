@@ -27,7 +27,8 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/main_frame_layout"/>
+            android:id="@+id/main_frame_layout"
+            android:background="@drawable/premiun_dark"/>
         <ListView
             android:layout_width="200dp"
             android:layout_height="match_parent"

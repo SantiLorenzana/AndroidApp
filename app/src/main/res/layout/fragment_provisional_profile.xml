@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/premiun_dark"
-    tools:context="com.app1t1617.iotgroup.swithome.MyProfileActivity">
+    tools:context="com.app1t1617.iotgroup.swithome.Profile.MyProfileFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,17 +18,14 @@
 
 
         <TextView
-            android:id="@+id/userNameProfile"
+            android:id="@+id/profile_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/michroma"
             android:text="Username"
             android:textColor="@color/botones"
             android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/nombreUserTitle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:textStyle="bold"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_marginTop="7dp"
@@ -46,13 +43,15 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/changeName"
+                android:id="@+id/change_photo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
                 android:background="@drawable/roundedbutton"
                 android:elevation="0dp"
                 android:fontFamily="@font/roboto"
-                android:text="Cambiar nombre de usuario"
+                android:text="Cambiar foto de usuario"
                 android:textColor="@color/textos"
                 android:visibility="visible"
                 tools:layout_editor_absoluteX="161dp"
@@ -77,6 +76,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/roundedbutton"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
                 android:elevation="0dp"
                 android:fontFamily="@font/roboto"
                 android:text="Cambiar contraseña"
@@ -105,6 +106,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/roundedbutton"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
                 android:elevation="0dp"
                 android:fontFamily="@font/roboto"
                 android:text="Cambiar email"

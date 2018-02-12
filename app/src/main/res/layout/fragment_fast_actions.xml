@@ -170,10 +170,10 @@
                 android:layout_width="157dp"
                 android:id="@+id/reset_switchome"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/btn_danger"
+                android:background="@drawable/rounded_danger_buton"
                 android:fontFamily="@font/roboto"
                 android:text="Reiniciar el sistema"
-                android:textColor="#F5F5F5" />
+                android:textColor="@color/textos" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
