@@ -3,7 +3,7 @@
 
     <item android:state_pressed="true">
         <shape  >
-            <solid android:color="@color/low_alfa_pressed" />
+            <solid android:color="@color/low_alfa_purple" />
             <corners
                 android:radius="50dp"/>
         </shape>
@@ -11,7 +11,7 @@
 
     <item android:state_focused="true" >
         <shape xmlns:android="http://schemas.android.com/apk/res/android" >
-            <solid android:color="@color/low_alfa_pressed"/>
+            <solid android:color="@color/low_alfa_purple"/>
             <corners
                 android:radius="50dp"/>
         </shape>

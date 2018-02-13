@@ -20,8 +20,6 @@
         </activity>
         <activity android:name=".Login.RegisterActivity" />
         <activity android:name=".Login.ResetPassActivity" />
-        <activity android:name=".MyConfigActivity" />
-        <activity android:name=".MyDevicesActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

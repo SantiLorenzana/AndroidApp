@@ -62,7 +62,7 @@
                         android:layout_height="100dp"
                         android:layout_width="100dp"
                         android:src="@drawable/iconos_app_switchome"
-                        android:background="@color/transparent"
+                        android:background="@drawable/rounded_transparent_purple"
                         android:scaleType="fitCenter" />
                 </LinearLayout>
 
@@ -92,7 +92,7 @@
                         android:layout_height="100dp"
                         android:layout_width="100dp"
                         android:src="@drawable/sensor_icon"
-                        android:background="@color/transparent"
+                        android:background="@drawable/rounded_transparent_green"
                         android:scaleType="fitCenter" />
                 </LinearLayout>
 
@@ -128,7 +128,7 @@
                         android:layout_height="100dp"
                         android:layout_width="100dp"
                         android:src="@drawable/icono_off"
-                        android:background="@drawable/transparent_background_button"
+                        android:background="@drawable/rounded_transparent_red"
                         android:scaleType="fitCenter" />
                 </LinearLayout>
 

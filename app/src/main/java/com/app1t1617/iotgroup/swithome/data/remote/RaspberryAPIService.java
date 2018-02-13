@@ -11,7 +11,7 @@ import retrofit2.http.GET;
 
 public interface RaspberryAPIService {
 
-    String RASPBERRY_URL = "http://192.168.6.239/serverSwitcHome/public/index.php/";
+    String RASPBERRY_URL = "http://192.168.2.7/serverSwitcHome/public/index.php/";
 
     @GET(RASPBERRY_URL+"welcome/executeScript.json")
     Call<Get> switchLight();
