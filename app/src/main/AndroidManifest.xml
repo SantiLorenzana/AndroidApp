@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.app1t1617.iotgroup.swithome">
+    <uses-feature android:name="android.hardware.camera" android:required="true"/>
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -9,23 +13,27 @@
         android:icon="@drawable/logofinal"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
+        android:supportsRtl="false"
         android:theme="@style/AppTheme">
-        <activity android:name=".Login.MainActivity">
+        <activity android:name=".Login.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login.RegisterActivity" />
-        <activity android:name=".Login.ResetPassActivity" />
+        <activity android:name=".Login.RegisterActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Login.ResetPassActivity"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".Main.MainInitialActivity"></activity>
+        <activity android:name=".Main.MainInitialActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

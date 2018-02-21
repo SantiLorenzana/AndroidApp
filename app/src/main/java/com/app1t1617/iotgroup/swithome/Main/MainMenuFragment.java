@@ -2,6 +2,9 @@ package com.app1t1617.iotgroup.swithome.Main;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -16,14 +19,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app1t1617.iotgroup.swithome.Devices.DevicesFragment;
 import com.app1t1617.iotgroup.swithome.FastActions.FastActionsFragment;
 import com.app1t1617.iotgroup.swithome.Profile.MyProfileFragment;
 import com.app1t1617.iotgroup.swithome.R;
+import com.app1t1617.iotgroup.swithome.Utils.FileStorage;
 import com.app1t1617.iotgroup.swithome.data.model.Get;
 import com.app1t1617.iotgroup.swithome.data.remote.APIService;
 import com.app1t1617.iotgroup.swithome.data.remote.ApiUtils;
 import com.app1t1617.iotgroup.swithome.data.remote.RaspberryAPIService;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,7 +60,7 @@ public class MainMenuFragment extends Fragment {
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
 
-    private RaspberryAPIService mRaspberryAPIService;
+
 
     View layout;
     Toast toast;
@@ -77,7 +90,7 @@ public class MainMenuFragment extends Fragment {
 
         getActivity().setTitle("Inicio");
 
-        mRaspberryAPIService = ApiUtils.getRaspberryAPIService();
+
 
         //Obtener de preferencias el dato guardado
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -99,16 +112,10 @@ public class MainMenuFragment extends Fragment {
         myDevices.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRaspberryAPIService.switchLight().enqueue(new Callback<Get>() {
-                    @Override
-                    public void onResponse(Call<Get> call, Response<Get> response) {
-                        Log.d("RASPBERRY", response.headers()+"");
-                    }
-                    @Override
-                    public void onFailure(Call<Get> call, Throwable t) {
-                        Log.d("RASPBERRY", t+"");
-                    }
-                });
+                fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
+                fragmentTransaction.replace(R.id.main_frame_layout, new DevicesFragment()).addToBackStack(null);
+                fragmentTransaction.commit();
+
             }
         });
 
@@ -159,6 +166,58 @@ public class MainMenuFragment extends Fragment {
         }else{
             profileImage.setVisibility(View.VISIBLE);
             welcome.setVisibility(View.GONE);
+            loadImage();
+        }
+    }
+
+    public void loadImage(){
+
+        String serverFilePath = prefs.getString("urlPhoto", "");
+        String filePath = prefs.getString("profileImagePath", "");
+
+        Log.d("CARGA RESULTADO", filePath+"     "+serverFilePath );
+        if (filePath != ""){
+            Picasso.with(getActivity()).load(Uri.fromFile(new File(filePath))).memoryPolicy(MemoryPolicy.NO_CACHE).into(profileImage);
+            Log.d("STORAGE", filePath);
+        }else if (serverFilePath != ""){
+            Picasso.with(getActivity()).load(serverFilePath).memoryPolicy(MemoryPolicy.NO_CACHE).into(new Target() {
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    storeImage(bitmap);
+                    profileImage.setImageBitmap(bitmap);
+                }
+
+                @Override
+                public void onBitmapFailed(Drawable errorDrawable) {
+
+                }
+
+                @Override
+                public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                }
+            });
+            Log.d("URL", serverFilePath);
+        }
+    }
+
+    public void storeImage(Bitmap image) {
+        File pictureFile = FileStorage.getOutputMediaFile();
+        if (pictureFile == null) {
+            Log.d("STORE IMAGE ERROR",
+                    "Error creating media file, check storage permissions: ");// e.getMessage());
+            return;
+        }
+        try {
+            FileOutputStream fos = new FileOutputStream(pictureFile);
+            image.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            editor.putString("profileImagePath", pictureFile.getAbsolutePath());
+            editor.commit();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            Log.d("STORE IMAGE ERROR 2", "File not found: " + e.getMessage());
+        } catch (IOException e) {
+            Log.d("STORE IMAGE ERROR 3", "Error accessing file: " + e.getMessage());
         }
     }
 

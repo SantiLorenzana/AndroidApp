@@ -1,9 +1,11 @@
 package com.app1t1617.iotgroup.swithome.data.model;
+
+import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-//Constructor de datos devueltos de la Api en peticion Post
-public class Get {
+public class Get implements Serializable
+{
 
     @SerializedName("code")
     @Expose
@@ -14,6 +16,27 @@ public class Get {
     @SerializedName("data")
     @Expose
     private Data data;
+    private final static long serialVersionUID = 427939554532646039L;
+
+    /**
+     * No args constructor for use in serialization
+     *
+     */
+    public Get() {
+    }
+
+    /**
+     *
+     * @param message
+     * @param data
+     * @param code
+     */
+    public Get(Integer code, String message, Data data) {
+        super();
+        this.code = code;
+        this.message = message;
+        this.data = data;
+    }
 
     public Integer getCode() {
         return code;
@@ -21,6 +44,11 @@ public class Get {
 
     public void setCode(Integer code) {
         this.code = code;
+    }
+
+    public Get withCode(Integer code) {
+        this.code = code;
+        return this;
     }
 
     public String getMessage() {
@@ -31,6 +59,11 @@ public class Get {
         this.message = message;
     }
 
+    public Get withMessage(String message) {
+        this.message = message;
+        return this;
+    }
+
     public Data getData() {
         return data;
     }
@@ -38,5 +71,11 @@ public class Get {
     public void setData(Data data) {
         this.data = data;
     }
+
+    public Get withData(Data data) {
+        this.data = data;
+        return this;
+    }
+
 
 }

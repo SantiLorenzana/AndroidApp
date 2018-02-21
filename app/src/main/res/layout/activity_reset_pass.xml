@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:background="@drawable/premiun_dark"
     tools:context="com.app1t1617.iotgroup.swithome.Login.ResetPassActivity">
 
@@ -25,7 +26,7 @@
             android:text="Recuperar contraseña"
             android:textAlignment="center"
             android:textColor="@color/botones"
-            android:textSize="25sp"
+            android:textSize="22sp"
             android:typeface="sans"
             android:visibility="visible"
             tools:layout_editor_absoluteX="119dp"

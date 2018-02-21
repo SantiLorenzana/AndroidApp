@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#232323"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingBottom="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:text="¿Sabías que?"
+        android:textSize="10pt"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textColor="@color/textos" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:text="Si deslizas tu dedo hacia la izquierda en cualquier pantalla, despliegas las funciones rápidas"
+        android:textSize="7pt"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textColor="@color/textos" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/custom_checkbox_blue"
+            android:id="@+id/checkbox_fast_actions"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="No volver a mostrar"
+            android:textSize="7pt"
+            android:layout_marginLeft="18dp"
+            android:gravity="center"
+            android:textColor="@color/textos" />
+    </LinearLayout>
+
+
+
+    <Button
+        android:id="@+id/ok_fast_actions_button"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/roundedbutton"
+        android:text="¡OK!"
+        android:gravity="center"
+        android:textColor="@color/textos" />
+
+
+</LinearLayout>

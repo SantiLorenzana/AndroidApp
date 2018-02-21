@@ -142,7 +142,7 @@ public class ResetPassActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Post> call, Response<Post> response) {
                     if (response.isSuccessful()) {
-                        motherOfToast(response.body().toString());
+                        motherOfToast(response.body().getMessage().toString());
                         if (response.body().getCode() == 201) {
                             dialog.dismiss();
                             thread.start();

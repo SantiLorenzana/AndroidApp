@@ -47,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
     Toast toast;
     TextView textToast;
 
+    //Package name
+    public static String PACKAGE_NAME;
+
 
     //Adaptación de la API
     @SuppressLint("WrongViewCast")
@@ -54,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        PACKAGE_NAME = getApplicationContext().getPackageName();
+
         setContentView(R.layout.activity_main);
         //Declaración del servicio
         mAPIService = ApiUtils.getAPIService();
@@ -124,7 +130,9 @@ public class MainActivity extends AppCompatActivity {
                 if (response.body().getCode() == 200){
                     editor.putString("token", response.body().getData().getToken());
                     editor.putString("nameLogged", response.body().getData().getName());
-                    Log.d("LOGIN", response.body().getData()+"");
+                    editor.putString("urlPhoto", response.body().getData().getUrlPhoto());
+
+                    Log.d("LOGIN", response.body().getData().getUrlPhoto()+"");
                     editor.commit();
                     changeToLogin();
                 }else{

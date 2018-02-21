@@ -78,12 +78,6 @@
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:gravity="center">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cambiar email"
-                    android:textColor="@color/textos"
-                    android:textSize="7pt"/>
                 <ImageButton
                     android:layout_width="60dp"
                     android:layout_height="60dp"
@@ -91,6 +85,12 @@
                     android:layout_marginTop="8dp"
                     android:background="@drawable/solid_button_rounded"
                     android:src="@drawable/mail_profile_icon"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cambiar email"
+                    android:textColor="@color/textos"
+                    android:textSize="7pt"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -98,12 +98,6 @@
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:gravity="center">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cambiar contraseña"
-                    android:textColor="@color/textos"
-                    android:textSize="7pt"/>
                 <ImageButton
                     android:layout_width="60dp"
                     android:layout_height="60dp"
@@ -111,6 +105,12 @@
                     android:layout_marginTop="8dp"
                     android:background="@drawable/solid_button_rounded"
                     android:src="@drawable/pass_profile_icon"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cambiar contraseña"
+                    android:textColor="@color/textos"
+                    android:textSize="7pt"/>
             </LinearLayout>
 
 

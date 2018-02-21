@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item android:state_pressed="true">
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="rectangle">
+            <corners android:radius="8dp" />
+            <padding
+                android:left="30dp"
+                android:right="30dp"
+                android:top="20dp"
+                android:bottom="20dp"/>
+            <solid
+                android:color="@color/botones_pressed_low_alfa" />
+            <stroke
+                android:width="4dp"
+                android:color="#fffb8a" />
+        </shape>
+    </item>
+
+    <item android:state_focused="true" >
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="rectangle">
+            <corners android:radius="8dp" />
+            <padding
+                android:left="30dp"
+                android:right="30dp"
+                android:top="20dp"
+                android:bottom="20dp"/>
+            <solid
+                android:color="@color/botones_pressed_low_alfa" />
+            <stroke
+                android:width="4dp"
+                android:color="#fffb8a" />
+        </shape>
+    </item>
+
+    <item android:state_focused="false" >
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="rectangle">
+            <corners android:radius="8dp" />
+            <padding
+                android:bottom="20dp"
+                android:left="30dp"
+                android:right="30dp"
+                android:top="20dp" />
+            <solid android:color="@color/botones_low_alfa" />
+            <stroke
+                android:width="4dp"
+                android:color="#fffb8a" />
+        </shape>
+    </item>
+
+    <item android:state_pressed="false" >
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="rectangle">
+            <corners android:radius="8dp" />
+            <padding
+                android:bottom="20dp"
+                android:left="30dp"
+                android:right="30dp"
+                android:top="20dp" />
+            <solid android:color="@color/botones_low_alfa" />
+            <stroke
+                android:width="4dp"
+                android:color="#fffb8a" />
+        </shape>
+    </item>
+
+</selector>

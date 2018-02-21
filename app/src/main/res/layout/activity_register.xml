@@ -83,7 +83,7 @@
                 android:ems="10"
                 android:fontFamily="@font/roboto"
                 android:hint="Email"
-                android:inputType="textPersonName"
+                android:inputType="textEmailAddress"
                 android:paddingLeft="10dp"
                 android:textColor="@color/textos"
                 android:textColorHint="@color/botones"

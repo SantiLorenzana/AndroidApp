@@ -2,6 +2,8 @@ package com.app1t1617.iotgroup.swithome.Login;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,7 +106,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Post> call, Response<Post> response) {
                 if(response.isSuccessful()) {
-                    motherOfToast(response.body().toString());
+                    motherOfToast(response.body().getMessage());
                     //Si la respuesta es que se ha creado un usuario, se finaliza la actividad y se vuelve al login
                     if (response.body().getCode() == 201) {
                         thread.start();
@@ -167,8 +169,8 @@ public class RegisterActivity extends AppCompatActivity {
             nameValidation = true;
         }
 
-        if (email.length() < 1){
-            emailR.setError("No puede estar vacio");
+        if (!isValidEmail(email)){
+            emailR.setError("Debe ser válido");
             emailValidation = false;
         } else {
             emailValidation = true;
@@ -193,5 +195,8 @@ public class RegisterActivity extends AppCompatActivity {
         }else{
             return  false;
         }
+    }
+    public final static boolean isValidEmail(CharSequence target) {
+        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
 }

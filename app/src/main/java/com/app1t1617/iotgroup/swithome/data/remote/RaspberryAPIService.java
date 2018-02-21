@@ -15,4 +15,10 @@ public interface RaspberryAPIService {
 
     @GET(RASPBERRY_URL+"welcome/executeScript.json")
     Call<Get> switchLight();
+
+    @GET(RASPBERRY_URL+"welcome/powerOff.json")
+    Call<Get> turnOffLight();
+
+    @GET(RASPBERRY_URL+"welcome/powerOn.json")
+    Call<Get> turnOnLight();
 }

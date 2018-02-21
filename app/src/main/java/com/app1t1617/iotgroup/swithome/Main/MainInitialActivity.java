@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,25 +16,29 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app1t1617.iotgroup.swithome.Devices.DevicesFragment;
 import com.app1t1617.iotgroup.swithome.FastActions.FastActionsFragment;
 import com.app1t1617.iotgroup.swithome.Login.MainActivity;
 import com.app1t1617.iotgroup.swithome.Profile.MyProfileFragment;
 import com.app1t1617.iotgroup.swithome.R;
+import com.app1t1617.iotgroup.swithome.Utils.OnSwipeTouchListener;
 
 public class MainInitialActivity extends AppCompatActivity {
 
+    FrameLayout frameLayout;
     ListView menu;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
-    Fragment fragment;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle drawerToggle;
     SharedPreferences prefs;
@@ -51,6 +56,9 @@ public class MainInitialActivity extends AppCompatActivity {
         mainToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.main_toolbar);
 
         setSupportActionBar(mainToolbar);
+
+        //Frame Layout
+        frameLayout = (FrameLayout) findViewById(R.id.main_frame_layout);
 
         //Toast
         layout = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastlinear));
@@ -84,6 +92,15 @@ public class MainInitialActivity extends AppCompatActivity {
             }
         });
 
+        frameLayout.setOnTouchListener(new OnSwipeTouchListener(this){
+            public void onSwipeLeft() {
+                if (mainToolbar.getTitle() != "Funciones rápidas") {
+                    clearBackStack();
+                    changeFragment(new FastActionsFragment(), true);
+                }
+            }
+        });
+
 
     }
     private void abrirPantalla(int i){
@@ -95,7 +112,10 @@ public class MainInitialActivity extends AppCompatActivity {
                 clearBackStack();
                 break;
             case 1:
-                motherOfToast("Vista en construcción");
+                if (mainToolbar.getTitle() != "Mis dispositivos") {
+                    clearBackStack();
+                    changeFragment(new DevicesFragment(), true);
+                }
                 break;
             case 2:
                 motherOfToast("Vista en construcción");
@@ -144,6 +164,9 @@ public class MainInitialActivity extends AppCompatActivity {
         editor.remove("token");
         editor.remove("nameLogged");
         editor.remove("firstLog");
+        editor.remove("urlPhoto");
+        editor.remove("profileImagePath");
+        editor.remove("showFastActionsInfo");
         editor.commit();
         startActivity(intent);
         finish();
