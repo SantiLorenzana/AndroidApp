@@ -22,6 +22,9 @@ public class Data implements Serializable
     @SerializedName("user")
     @Expose
     private User user;
+    @SerializedName("ip_device")
+    @Expose
+    private String ip_device;
     private final static long serialVersionUID = -7107292181391806667L;
 
 
@@ -101,5 +104,9 @@ public class Data implements Serializable
 
     public String getUrlPhoto() {
         return urlPhoto;
+    }
+
+    public String getIpDevice() {
+        return ip_device;
     }
 }

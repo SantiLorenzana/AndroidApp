@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -34,6 +35,8 @@ public class DevicesFragment extends Fragment {
     LinearLayout soundButton;
     LinearLayout searchButton;
 
+    FragmentTransaction fragmentTransaction;
+
     //Toast
     View layout;
     Toast toast;
@@ -62,6 +65,8 @@ public class DevicesFragment extends Fragment {
         lightButton = (LinearLayout) view.findViewById(R.id.light_button);
         searchButton = (LinearLayout) view.findViewById(R.id.search_button);
 
+        fragmentTransaction = getFragmentManager().beginTransaction();
+
         mRaspberryAPIService = ApiUtils.getRaspberryAPIService();
 
         //Toast
@@ -79,16 +84,9 @@ public class DevicesFragment extends Fragment {
         lightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRaspberryAPIService.switchLight().enqueue(new Callback<Get>() {
-                    @Override
-                    public void onResponse(Call<Get> call, Response<Get> response) {
-                        Log.d("RASPBERRY", response.headers()+"");
-                    }
-                    @Override
-                    public void onFailure(Call<Get> call, Throwable t) {
-                        Log.d("RASPBERRY", t+"");
-                    }
-                });
+                fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
+                fragmentTransaction.replace(R.id.main_frame_layout, new LightDevicesListFragment()).addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
 

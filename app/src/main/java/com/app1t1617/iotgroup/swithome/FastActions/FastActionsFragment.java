@@ -27,10 +27,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app1t1617.iotgroup.swithome.Devices.LightListAdapter;
 import com.app1t1617.iotgroup.swithome.Login.ResetPassActivity;
 import com.app1t1617.iotgroup.swithome.Main.MainMenuFragment;
+import com.app1t1617.iotgroup.swithome.Objets.Device;
+import com.app1t1617.iotgroup.swithome.Objets.DevicesIDPreferences;
 import com.app1t1617.iotgroup.swithome.R;
 import com.app1t1617.iotgroup.swithome.data.model.Get;
+import com.app1t1617.iotgroup.swithome.data.remote.APIService;
 import com.app1t1617.iotgroup.swithome.data.remote.ApiUtils;
 import com.app1t1617.iotgroup.swithome.data.remote.RaspberryAPIService;
 
@@ -62,6 +66,7 @@ public class FastActionsFragment extends Fragment {
     SharedPreferences.Editor editor;
 
     private RaspberryAPIService mRaspberryAPIService;
+    private APIService mAPIService;
 
     public FastActionsFragment(){
 
@@ -101,6 +106,7 @@ public class FastActionsFragment extends Fragment {
         showFastInfo(showInfo);
 
         mRaspberryAPIService = ApiUtils.getRaspberryAPIService();
+        mAPIService = ApiUtils.getAPIService();
 
         checkNightMode();
         checkFollowMode();
@@ -216,29 +222,45 @@ public class FastActionsFragment extends Fragment {
                 dialog.dismiss();
             }
         });
+
         acept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRaspberryAPIService.turnOffLight().enqueue(new Callback<Get>() {
-                    @Override
-                    public void onResponse(Call<Get> call, Response<Get> response) {
-                        if (response.body().getCode() == 200){
-                            motherOfToast(response.body().getMessage());
-                            dialog.dismiss();
-                        }else{
-                            motherOfToast(response.body().getMessage());
-                        }
-                        Log.d("RASPBERRY", response.headers()+"");
+                DevicesIDPreferences idDevices = new DevicesIDPreferences();
+                idDevices = idDevices.fromJson(prefs.getString("idDevices", ""));
+
+                Log.d("IDS", idDevices+"");
+                if (!(idDevices == null)){
+                    Log.d("IDS", idDevices.ids+"");
+                    for (String id : idDevices.ids) {
+                        turnOffByID(id);
                     }
-                    @Override
-                    public void onFailure(Call<Get> call, Throwable t) {
-                        Log.d("RASPBERRY", t+"");
-                    }
-                });
+                }
+
+                dialog.dismiss();
             }
         });
 
         dialog.show();
+    }
+
+    public void turnOff(String ip){
+        mRaspberryAPIService.turnOffLight(ip).enqueue(new Callback<Get>() {
+            @Override
+            public void onResponse(Call<Get> call, Response<Get> response) {
+                if (response.body().getCode() == 200){
+                    motherOfToast(response.body().getMessage());
+
+                }else{
+                    motherOfToast(response.body().getMessage());
+                }
+                Log.d("RASPBERRY", response.headers()+"");
+            }
+            @Override
+            public void onFailure(Call<Get> call, Throwable t) {
+                Log.d("RASPBERRY", t+"");
+            }
+        });
     }
 
     public void showResetAlert(){
@@ -274,5 +296,23 @@ public class FastActionsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
+
+    public void turnOffByID(final String id){
+        mAPIService.device(prefs.getString("token", ""), id).enqueue(new Callback<Get>() {
+            @Override
+            public void onResponse(Call<Get> call, Response<Get> response) {
+                if (response.body().getCode() == 200) {
+                    turnOff(response.body().getData().getIpDevice());
+                }else{
+                    Log.d("ERROR CON LA ID", response.headers()+"");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Get> call, Throwable t) {
+
+            }
+        });
     }
 }

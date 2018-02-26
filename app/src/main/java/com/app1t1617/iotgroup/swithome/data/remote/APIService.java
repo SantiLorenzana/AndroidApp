@@ -28,8 +28,8 @@ public interface APIService {
     @POST("users/create.json")
     @FormUrlEncoded
     Call<Post> registerUser(@Field("name") String name,
-                        @Field("pass") String pass,
-                        @Field("email") String email);
+                            @Field("pass") String pass,
+                            @Field("email") String email);
 
     @POST("users/update_pass.json")
     @FormUrlEncoded
@@ -44,6 +44,9 @@ public interface APIService {
 
     @GET("base/default_auth.json")
     Call<Get> defaultAuth(@Header("Authorization") String token);
+
+    @GET("switchome/singleIp.json")
+    Call<Get> device(@Header("Authorization") String token, @Query("id") String id);
 
     @Multipart
     @POST("users/updateData.json")

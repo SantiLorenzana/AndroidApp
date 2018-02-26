@@ -167,6 +167,7 @@ public class MainInitialActivity extends AppCompatActivity {
         editor.remove("urlPhoto");
         editor.remove("profileImagePath");
         editor.remove("showFastActionsInfo");
+        editor.remove("idDevices");
         editor.commit();
         startActivity(intent);
         finish();
