@@ -92,6 +92,7 @@ public class MainMenuFragment extends Fragment {
 
 
 
+
         //Obtener de preferencias el dato guardado
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
         editor = prefs.edit();

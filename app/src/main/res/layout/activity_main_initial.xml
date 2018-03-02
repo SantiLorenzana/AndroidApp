@@ -13,7 +13,9 @@
         android:layout_width="match_parent"
         android:minHeight="?attr/actionBarSize"
         android:background="@color/greyToolbar"
-        app:titleTextColor="@color/textos"/>
+        app:titleTextColor="@color/textos"
+       android:gravity="center"
+        />
 
     <View android:layout_height="3dp"
         android:layout_width="match_parent"

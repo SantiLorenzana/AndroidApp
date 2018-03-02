@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -34,6 +36,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by chema.dev on 21/2/18.
@@ -46,6 +53,7 @@ public class LightDevicesListFragment extends Fragment {
     ImageButton addButton;
     ListView devicesList;
 
+
     //Toast
     View layout;
     Toast toast;
@@ -57,6 +65,13 @@ public class LightDevicesListFragment extends Fragment {
 
     ArrayList<Device> lightDevices;
     ArrayAdapter adapter;
+
+    //QR CODE
+    private Button buttonScan;
+
+    //qr code scanner object
+    private IntentIntegrator qrScan;
+
 
     private RaspberryAPIService mRaspberryAPIService;
     private APIService mAPIService;
@@ -78,15 +93,14 @@ public class LightDevicesListFragment extends Fragment {
 
         getActivity().setTitle("Iluminación");
 
+
         //Obtener de preferencias el dato guardado
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
         editor = prefs.edit();
 
-        TextView tittle = (TextView) view.findViewById(R.id.tittle_my_devices);
         addButton = (ImageButton) view.findViewById(R.id.add_device_button);
         devicesList = (ListView) view.findViewById(R.id.list_devices);
 
-        tittle.setText("Iluminación");
 
         //Toast
         layout = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) view.findViewById(R.id.toastlinear));
@@ -106,8 +120,14 @@ public class LightDevicesListFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 final Dialog dialog = new Dialog(context);
-                dialog.getWindow().setContentView(R.layout.alert_add_device);
+                dialog.getWindow().setContentView(R.layout.alert_add_device_qrscan);
                 final EditText id = (EditText) dialog.findViewById(R.id.devices_add_input);
+
+                //intializing scan object
+               // qrScan = new IntentIntegrator(this);
+
+                //attaching onclick listener
+               // buttonScan.setOnClickListener(this);
 
                 Button cancel = (Button) dialog.findViewById(R.id.cancel_add_device);
                 final Button acept = (Button) dialog.findViewById(R.id.accept_add_device);

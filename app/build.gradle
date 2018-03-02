@@ -9,6 +9,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
     }
     buildTypes {
         release {
@@ -40,4 +41,7 @@ dependencies {
 
     //Circle images
     compile 'de.hdodenhof:circleimageview:2.2.0'
+
+    //Qr code Scan
+    compile 'com.journeyapps:zxing-android-embedded:3.4.0'
 }
