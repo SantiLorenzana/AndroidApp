@@ -1,19 +1,27 @@
 package com.app1t1617.iotgroup.swithome.Devices;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
-import android.text.Layout;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,18 +37,20 @@ import com.app1t1617.iotgroup.swithome.data.model.Get;
 import com.app1t1617.iotgroup.swithome.data.remote.APIService;
 import com.app1t1617.iotgroup.swithome.data.remote.ApiUtils;
 import com.app1t1617.iotgroup.swithome.data.remote.RaspberryAPIService;
+import com.google.android.gms.vision.CameraSource;
+import com.google.android.gms.vision.Detector;
+import com.google.android.gms.vision.barcode.Barcode;
+import com.google.android.gms.vision.barcode.BarcodeDetector;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+
 
 /**
  * Created by chema.dev on 21/2/18.
@@ -66,11 +76,13 @@ public class LightDevicesListFragment extends Fragment {
     ArrayList<Device> lightDevices;
     ArrayAdapter adapter;
 
-    //QR CODE
-    private Button buttonScan;
 
     //qr code scanner object
-    private IntentIntegrator qrScan;
+    private CameraSource cameraSource;
+    private SurfaceView cameraView;
+    private String token = "";
+    private String tokenanterior = "";
+    private final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
 
 
     private RaspberryAPIService mRaspberryAPIService;
@@ -101,7 +113,6 @@ public class LightDevicesListFragment extends Fragment {
         addButton = (ImageButton) view.findViewById(R.id.add_device_button);
         devicesList = (ListView) view.findViewById(R.id.list_devices);
 
-
         //Toast
         layout = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) view.findViewById(R.id.toastlinear));
         textToast = (TextView) layout.findViewById(R.id.toastapp);
@@ -120,14 +131,17 @@ public class LightDevicesListFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 final Dialog dialog = new Dialog(context);
-                dialog.getWindow().setContentView(R.layout.alert_add_device_qrscan);
+                dialog.getWindow().setContentView(R.layout.alert_add_device);
                 final EditText id = (EditText) dialog.findViewById(R.id.devices_add_input);
 
-                //intializing scan object
-               // qrScan = new IntentIntegrator(this);
+                Button scan = (Button) dialog.findViewById(R.id.buttonScan);
 
-                //attaching onclick listener
-               // buttonScan.setOnClickListener(this);
+                scan.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startScan();
+                    }
+                });
 
                 Button cancel = (Button) dialog.findViewById(R.id.cancel_add_device);
                 final Button acept = (Button) dialog.findViewById(R.id.accept_add_device);
@@ -148,9 +162,6 @@ public class LightDevicesListFragment extends Fragment {
                 dialog.show();
             }
         });
-
-
-
 
 
 
@@ -204,7 +215,114 @@ public class LightDevicesListFragment extends Fragment {
                 getDeviceByID(id);
             }
         }
+    }
 
+    public void startScan(){
+        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(getContext())
+                .setBarcodeFormats(Barcode.QR_CODE)
+                .build();
+
+        // creo la camara
+        cameraSource = new CameraSource.Builder(getContext(), barcodeDetector)
+                .setRequestedPreviewSize(1600, 1024)
+                .setAutoFocusEnabled(true) //you should add this feature
+                .build();
+
+        // listener de ciclo de vida de la camara
+        cameraView.getHolder().addCallback(new SurfaceHolder.Callback() {
+            @Override
+            public void surfaceCreated(SurfaceHolder holder) {
+
+
+                // verifico si el usuario dio los permisos para la camara
+                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED) {
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        // verificamos la version de ANdroid que sea al menos la M para mostrar
+                        // el dialog de la solicitud de la camara
+                        if (shouldShowRequestPermissionRationale(
+                                Manifest.permission.CAMERA)) ;
+                        requestPermissions(new String[]{Manifest.permission.CAMERA},
+                                MY_PERMISSIONS_REQUEST_CAMERA);
+                    }
+                    return;
+                } else {
+                    try {
+                        cameraSource.start(cameraView.getHolder());
+                    } catch (IOException ie) {
+                        Log.e("CAMERA SOURCE", ie.getMessage());
+                    }
+                }
+            }
+
+            @Override
+            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+            }
+
+            @Override
+            public void surfaceDestroyed(SurfaceHolder holder) {
+                cameraSource.stop();
+            }
+        });
+
+        // preparo el detector de QR
+        barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
+            @Override
+            public void release() {
+            }
+
+
+            @Override
+            public void receiveDetections(Detector.Detections<Barcode> detections) {
+                final SparseArray<Barcode> barcodes = detections.getDetectedItems();
+
+                if (barcodes.size() > 0) {
+
+                    // obtenemos el token
+                    token = barcodes.valueAt(0).displayValue.toString();
+
+                    // verificamos que el token anterior no se igual al actual
+                    // esto es util para evitar multiples llamadas empleando el mismo token
+                    if (!token.equals(tokenanterior)) {
+
+                        // guardamos el ultimo token proceado
+                        tokenanterior = token;
+                        Log.i("token", token);
+
+                        if (URLUtil.isValidUrl(token)) {
+                            // si es una URL valida abre el navegador
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(token));
+                            startActivity(browserIntent);
+                        } else {
+                            // comparte en otras apps
+                            Intent shareIntent = new Intent();
+                            shareIntent.setAction(Intent.ACTION_SEND);
+                            shareIntent.putExtra(Intent.EXTRA_TEXT, token);
+                            shareIntent.setType("text/plain");
+                            startActivity(shareIntent);
+                        }
+
+                        new Thread(new Runnable() {
+                            public void run() {
+                                try {
+                                    synchronized (this) {
+                                        wait(5000);
+                                        // limpiamos el token
+                                        tokenanterior = "";
+                                    }
+                                } catch (InterruptedException e) {
+                                    // TODO Auto-generated catch block
+                                    Log.e("Error", "Waiting didnt work!!");
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).start();
+
+                    }
+                }
+            }
+        });
 
     }
 

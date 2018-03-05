@@ -30,6 +30,18 @@
         android:textColor="@color/textos"
         android:textColorHint="@color/botones" />
 
+    <Button
+        android:id="@+id/buttonScan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:fontFamily="@font/roboto"
+        android:text="O escanea tu código QR"
+        android:textColor="@color/textos"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,7 +50,7 @@
         <Button
             android:id="@+id/cancel_add_device"
             android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_danger_buton"
             android:text="Cancelar"
@@ -48,7 +60,7 @@
         <Button
             android:id="@+id/accept_add_device"
             android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
             android:background="@drawable/roundedbutton"
             android:text="Aceptar"
