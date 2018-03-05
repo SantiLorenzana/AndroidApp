@@ -50,8 +50,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-
-
 /**
  * Created by chema.dev on 21/2/18.
  */
@@ -224,7 +222,7 @@ public class LightDevicesListFragment extends Fragment {
 
         // creo la camara
         cameraSource = new CameraSource.Builder(getContext(), barcodeDetector)
-                .setRequestedPreviewSize(1600, 1024)
+                .setRequestedPreviewSize(640, 480)
                 .setAutoFocusEnabled(true) //you should add this feature
                 .build();
 
