@@ -59,7 +59,6 @@ public class MainInitialActivity extends AppCompatActivity {
         setSupportActionBar(mainToolbar);
 
 
-
         //Frame Layout
         frameLayout = (FrameLayout) findViewById(R.id.main_frame_layout);
 
@@ -96,7 +95,7 @@ public class MainInitialActivity extends AppCompatActivity {
             }
         });
 
-        frameLayout.setOnTouchListener(new OnSwipeTouchListener(this){
+        frameLayout.setOnTouchListener(new OnSwipeTouchListener(this) {
             public void onSwipeLeft() {
                 if (mainToolbar.getTitle() != "Funciones rápidas") {
                     clearBackStack();
@@ -107,8 +106,8 @@ public class MainInitialActivity extends AppCompatActivity {
 
 
     }
-    private void abrirPantalla(int i){
 
+    private void abrirPantalla(int i) {
 
 
         switch (i) {
@@ -131,7 +130,7 @@ public class MainInitialActivity extends AppCompatActivity {
                 }
                 break;
             case 4:
-                if(mainToolbar.getTitle() != "Mi perfil"){
+                if (mainToolbar.getTitle() != "Mi perfil") {
                     clearBackStack();
                     changeFragment(new MyProfileFragment(), false);
                 }
@@ -143,11 +142,11 @@ public class MainInitialActivity extends AppCompatActivity {
 
     }
 
-    public void changeFragment(Fragment fragment, Boolean enterLeft){
+    public void changeFragment(Fragment fragment, Boolean enterLeft) {
         fragmentTransaction = fragmentManager.beginTransaction();
-        if(enterLeft){
+        if (enterLeft) {
             fragmentTransaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.enter_from_right, R.anim.exit_to_left);
-        }else{
+        } else {
             fragmentTransaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.enter_from_left, R.anim.exit_to_right);
         }
 
@@ -156,14 +155,14 @@ public class MainInitialActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    public void clearBackStack(){
+    public void clearBackStack() {
         fragmentManager.popBackStack();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.main_frame_layout, new MainMenuFragment(), "Fragment");
         fragmentTransaction.commit();
     }
 
-    public void backToLogin(){
+    public void backToLogin() {
         Intent intent = new Intent(this, MainActivity.class);
         editor.remove("token");
         editor.remove("nameLogged");
@@ -176,6 +175,7 @@ public class MainInitialActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -183,22 +183,21 @@ public class MainInitialActivity extends AppCompatActivity {
     }
 
     //toast function
-    public void motherOfToast(String message){
+    public void motherOfToast(String message) {
         toast.setDuration(Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.TOP,0,50);
+        toast.setGravity(Gravity.TOP, 0, 50);
         textToast.setText(message);
         toast.setView(layout);
         toast.show();
     }
 
+    //Resultado del scan recogido en el main initial activity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        idDevice = data.getStringExtra("SCAN_RESULT")+"";
-        motherOfToast(idDevice);
+        idDevice = data.getStringExtra("SCAN_RESULT") + "";
         LightDevicesListFragment fragment;
         fragment = (LightDevicesListFragment) fragmentManager.getFragments().get(0);
-        fragment.codeScanned(idDevice);
         fragment.id.setText(idDevice);
     }
 

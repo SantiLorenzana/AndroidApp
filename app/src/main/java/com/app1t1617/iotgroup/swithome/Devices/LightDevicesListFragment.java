@@ -1,27 +1,17 @@
 package com.app1t1617.iotgroup.swithome.Devices;
 
-import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.URLUtil;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,7 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.app1t1617.iotgroup.swithome.Main.MainInitialActivity;
+
 import com.app1t1617.iotgroup.swithome.Objets.Device;
 import com.app1t1617.iotgroup.swithome.Objets.DevicesIDPreferences;
 import com.app1t1617.iotgroup.swithome.R;
@@ -38,14 +28,8 @@ import com.app1t1617.iotgroup.swithome.data.model.Get;
 import com.app1t1617.iotgroup.swithome.data.remote.APIService;
 import com.app1t1617.iotgroup.swithome.data.remote.ApiUtils;
 import com.app1t1617.iotgroup.swithome.data.remote.RaspberryAPIService;
-import com.google.android.gms.vision.CameraSource;
-import com.google.android.gms.vision.Detector;
-import com.google.android.gms.vision.barcode.Barcode;
-import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -58,7 +42,7 @@ import retrofit2.Response;
  */
 
 public class LightDevicesListFragment extends Fragment {
-    final String LOG_TAG="LightDevicesListFragmen";
+    final String LOG_TAG = "LightDevicesListFragmen";
     public View view;
     public Context context;
 
@@ -79,11 +63,9 @@ public class LightDevicesListFragment extends Fragment {
     ArrayAdapter adapter;
 
 
-    //qr code scanner object
+    //qr code scanner objects
 
     public EditText id;
-    public String resultId;
-
 
 
     private RaspberryAPIService mRaspberryAPIService;
@@ -133,9 +115,11 @@ public class LightDevicesListFragment extends Fragment {
                 final Dialog dialog = new Dialog(context);
                 dialog.getWindow().setContentView(R.layout.alert_add_device);
                 id = (EditText) dialog.findViewById(R.id.devices_add_input);
-               // if (!resultId.isEmpty()){
-                 //   id.setText(resultId);
+                // if (!resultId.isEmpty()){
+                //   id.setText(resultId);
                 //}
+
+                //Boton e inicio del scan con el clicklistener
                 Button scan = (Button) dialog.findViewById(R.id.buttonScan);
 
                 scan.setOnClickListener(new View.OnClickListener() {
@@ -166,11 +150,10 @@ public class LightDevicesListFragment extends Fragment {
         });
 
 
-
         return view;
     }
 
-    public void getDeviceByID(final String id){
+    public void getDeviceByID(final String id) {
         mAPIService.device(prefs.getString("token", ""), id).enqueue(new Callback<Get>() {
             @Override
             public void onResponse(Call<Get> call, Response<Get> response) {
@@ -178,10 +161,10 @@ public class LightDevicesListFragment extends Fragment {
 
                     lightDevices.add(new Device("PROTOTIPO", "light", "sample description", id, response.body().getData().getIpDevice(), false, false, 100));
                     adapter = new LightListAdapter(getActivity(), R.layout.my_devices_list_adapter, lightDevices);
-                    Log.d("IP", response.body().getData().getIpDevice()+"");
+                    Log.d("IP", response.body().getData().getIpDevice() + "");
                     devicesList.setAdapter(adapter);
-                }else{
-                    Log.d("ERROR CON LA ID", response.headers()+"");
+                } else {
+                    Log.d("ERROR CON LA ID", response.headers() + "");
                 }
             }
 
@@ -192,54 +175,46 @@ public class LightDevicesListFragment extends Fragment {
         });
     }
 
-    public void addDeviceToPrefs(String id){
+    public void addDeviceToPrefs(String id) {
         DevicesIDPreferences idDevices = new DevicesIDPreferences();
         idDevices = idDevices.fromJson(prefs.getString("idDevices", ""));
-        if (idDevices == null){
+        if (idDevices == null) {
             idDevices = new DevicesIDPreferences();
         }
         idDevices.ids.add(id);
         String idsJson = idDevices.toJson();
 
-        Log.d("AGREGANDO", idDevices+"");
+        Log.d("AGREGANDO", idDevices + "");
         editor.putString("idDevices", idsJson);
         editor.commit();
     }
 
-    public void checkDevices(){
+    public void checkDevices() {
         DevicesIDPreferences idDevices = new DevicesIDPreferences();
         idDevices = idDevices.fromJson(prefs.getString("idDevices", ""));
 
-        Log.d("IDS", idDevices+"");
-        if (!(idDevices == null)){
-            Log.d("IDS", idDevices.ids+"");
+        Log.d("IDS", idDevices + "");
+        if (!(idDevices == null)) {
+            Log.d("IDS", idDevices.ids + "");
             for (String id : idDevices.ids) {
                 getDeviceByID(id);
             }
         }
     }
 
-    public void startScan(){
-        Log.d(LOG_TAG,"*** startScan");
+    //inicio del intent para el scanner
+    public void startScan() {
 
         new IntentIntegrator(getActivity()).initiateScan();
-
     }
-    
+
     //toast function
-    public void motherOfToast(String message){
+    public void motherOfToast(String message) {
         toast.setDuration(Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.TOP,0,50);
+        toast.setGravity(Gravity.TOP, 0, 50);
         textToast.setText(message);
         toast.setView(layout);
         toast.show();
     }
-    
-    public void codeScanned (String id){
-
-        Log.d("fragment", id);
-
-    }
-
 
 }
