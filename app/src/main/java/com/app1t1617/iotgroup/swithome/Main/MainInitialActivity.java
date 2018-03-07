@@ -7,16 +7,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MotionEventCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -27,11 +24,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app1t1617.iotgroup.swithome.Devices.DevicesFragment;
+import com.app1t1617.iotgroup.swithome.Devices.LightDevicesListFragment;
 import com.app1t1617.iotgroup.swithome.FastActions.FastActionsFragment;
 import com.app1t1617.iotgroup.swithome.Login.MainActivity;
 import com.app1t1617.iotgroup.swithome.Profile.MyProfileFragment;
 import com.app1t1617.iotgroup.swithome.R;
 import com.app1t1617.iotgroup.swithome.Utils.OnSwipeTouchListener;
+
 
 public class MainInitialActivity extends AppCompatActivity {
 
@@ -45,6 +44,8 @@ public class MainInitialActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
     Toolbar mainToolbar;
 
+    private String idDevice;
+
     View layout;
     Toast toast;
     TextView textToast;
@@ -57,6 +58,8 @@ public class MainInitialActivity extends AppCompatActivity {
 
         setSupportActionBar(mainToolbar);
 
+
+
         //Frame Layout
         frameLayout = (FrameLayout) findViewById(R.id.main_frame_layout);
 
@@ -67,6 +70,7 @@ public class MainInitialActivity extends AppCompatActivity {
 
         //Menú lateral configuración
         fragmentManager = getSupportFragmentManager();
+
 
         drawerLayout = (DrawerLayout) findViewById(R.id.menu_lateral);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, mainToolbar, R.string.abrir_menu, R.string.cerrar_menu);
@@ -185,6 +189,17 @@ public class MainInitialActivity extends AppCompatActivity {
         textToast.setText(message);
         toast.setView(layout);
         toast.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        idDevice = data.getStringExtra("SCAN_RESULT")+"";
+        motherOfToast(idDevice);
+        LightDevicesListFragment fragment;
+        fragment = (LightDevicesListFragment) fragmentManager.getFragments().get(0);
+        fragment.codeScanned(idDevice);
+        fragment.id.setText(idDevice);
     }
 
 }

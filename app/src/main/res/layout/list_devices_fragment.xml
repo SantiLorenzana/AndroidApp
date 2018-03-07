@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/premiun_dark"
-    tools:context="com.app1t1617.iotgroup.swithome.Login.RegisterActivity">
+    tools:context="com.app1t1617.iotgroup.swithome.Login.RegisterActivity"
+    android:id="@+id/list_devices_fragment">
 
     <LinearLayout
         android:layout_width="match_parent"
